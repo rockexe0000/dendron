@@ -23,6 +23,10 @@ export function run(): Promise<void> {
       if (err) {
         return e(err);
       }
+      // files = ["ChangeWorkspace.test.js", "CodeActionProvider.test.js"];
+      // files = ["ChangeWorkspace.test.js", "ConvertLink.test.js"];
+      files = ["ChangeWorkspace.test.js", "ConfigureExportPodV2.spec.js"];
+      // files = files.slice(4, 6);
       // Add files to the test suite
       files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
       console.log(`running tests on ${files}`);

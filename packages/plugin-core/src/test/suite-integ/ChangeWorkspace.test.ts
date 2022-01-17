@@ -13,7 +13,7 @@ import { expect } from "../testUtilsv2";
 import { getDWorkspace } from "../../workspace";
 
 // eslint-disable-next-line prefer-arrow-callback
-suite("GIVEN ChangeWorkspace command", function () {
+suite.skip("GIVEN ChangeWorkspace command", function () {
   const ctx = setupBeforeAfter(this, {});
 
   describeMultiWS(

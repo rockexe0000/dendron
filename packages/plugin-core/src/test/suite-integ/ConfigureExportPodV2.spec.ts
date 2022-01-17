@@ -13,7 +13,7 @@ import * as vscode from "vscode";
 import { getExtension } from "../../workspace";
 import { describe } from "mocha";
 
-suite(" Configure ExportPod V2 ", function () {
+suite("Configure ExportPod V2 ", function () {
   const ctx = setupBeforeAfter(this, {
     afterHook: () => {
       sinon.restore();

@@ -310,6 +310,9 @@ export function addDebugServerOverride() {
  * @param _this
  * @param opts.noSetInstallStatus: by default, we set install status to NO_CHANGE. use this when you need to test this logic
  * @param opts.noStubExecServerNode: stub this to be synchronous engine laungh for tests due to latency
+ * @param opts.noSetTimeout: if enabled, don't set timeout. setting a long timeout helps with debugging 
+ * @param opts.beforeHook: run a function before workspace is setup
+ * @param opts.afterHOok: run a function after a work is torn down
  * @returns
  */
 export function setupBeforeAfter(
@@ -321,10 +324,10 @@ export function setupBeforeAfter(
     noSetTimeout?: boolean;
   }
 ) {
-  // allows for
   if (!opts?.noSetTimeout) {
     _this.timeout(TIMEOUT);
   }
+  // create a fake ExtensionContext object
   const ctx = VSCodeUtils.getOrCreateMockContext();
   beforeEach(async () => {
     // DendronWorkspace.getOrCreate(ctx);
