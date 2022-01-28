@@ -1238,6 +1238,7 @@ function updateEngineAPI(port: number | string): void {
     port,
     enableWorkspaceTrust: vscode.workspace.isTrusted,
   });
+  console.log("BOND: setting engine");
   ext.setEngine(svc);
   ext.port = _.toInteger(port);
   // const engine = ext.getEngine();
