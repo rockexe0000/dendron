@@ -149,8 +149,11 @@ class ExtensionUtils {
     start: [number, number];
   }) {
     const ctx = "startServerProcess";
+    Logger.debug({ ctx, state: "startServerProcess:pre" });
     const { port, subprocess } = await startServerProcess();
+    Logger.debug({ ctx, state: "startServerProcess:post" });
     if (subprocess) {
+      Logger.debug({ ctx, state: "handleServerProcess:pre" });
       WSUtils.handleServerProcess({
         subprocess,
         context,
@@ -319,7 +322,8 @@ async function startServerProcess(): Promise<{
 }> {
   const { nextServerUrl, nextStaticRoot, engineServerPort } =
     getDWorkspace().config.dev || {};
-  // const ctx = "startServer";
+  const ctx = "startServerProcess";
+  Logger.info({ ctx, state: "enter" });
   const maybePort =
     DendronExtension.configuration().get<number | undefined>(
       CONFIG.SERVER_PORT.key
@@ -331,16 +335,19 @@ async function startServerProcess(): Promise<{
 
   // if in dev mode, simplify debugging without going multi process
   if (getStage() !== "prod") {
+    Logger.info({ ctx, state: "launchv2:pre" });
     const out = await launchv2({
       logPath: path.join(__dirname, "..", "..", "dendron.server.log"),
       googleOauthClientId: GOOGLE_OAUTH_ID,
       googleOauthClientSecret: GOOGLE_OAUTH_SECRET,
     });
+    Logger.info({ ctx, state: "launchv2:post" });
     return { port: out.port };
   }
 
   // start server is separate process
   const logPath = getDWorkspace().logUri.fsPath;
+  Logger.info({ ctx, state: "execServerNode:pre" });
   const out = await ServerUtils.execServerNode({
     scriptPath: path.join(__dirname, "server.js"),
     logPath,
