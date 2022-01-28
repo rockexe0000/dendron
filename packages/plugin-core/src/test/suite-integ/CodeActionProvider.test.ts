@@ -89,31 +89,33 @@ suite("Contextual UI Tests", function () {
   });
 
   describe("GIVEN header is selected in editor", () => {
-    // test("THEN code action for rename header is displayed", (done) => {
-    //   let noteWithLink: NoteProps;
-    //   runSingleVaultTest({
-    //     ctx,
-    //     preSetupHook: async ({ wsRoot, vaults }) => {
-    //       noteWithLink = await NoteTestUtilsV4.createNote({
-    //         fname: "test",
-    //         vault: vaults[0],
-    //         wsRoot,
-    //         body: "## Welcome",
-    //       });
-    //     },
-    //     onInit: async () => {
-    //       const editor = await WSUtils.openNote(noteWithLink);
-    //       const start = new vscode.Position(7, 2);
-    //       const end = new vscode.Position(7, 10);
-    //       editor.selection = new vscode.Selection(start, end);
-    //       expect(await isBrokenWikilink()).toBeFalsy();
-    //       expect(
-    //         getHeaderAt({ document: editor.document, position: start })
-    //       ).toNotEqual(undefined);
-    //       done();
-    //     },
-    //   });
-    // });
+    test("THEN code action for rename header is displayed", (done) => {
+      let noteWithLink: NoteProps;
+      console.log("BOND:test:enter");
+      runSingleVaultTest({
+        ctx,
+        preSetupHook: async ({ wsRoot, vaults }) => {
+          noteWithLink = await NoteTestUtilsV4.createNote({
+            fname: "test",
+            vault: vaults[0],
+            wsRoot,
+            body: "## Welcome",
+          });
+        },
+        onInit: async () => {
+          const editor = await WSUtils.openNote(noteWithLink);
+          const start = new vscode.Position(7, 2);
+          const end = new vscode.Position(7, 10);
+          editor.selection = new vscode.Selection(start, end);
+          expect(await isBrokenWikilink()).toBeFalsy();
+          expect(
+            getHeaderAt({ document: editor.document, position: start })
+          ).toNotEqual(undefined);
+          done();
+        },
+      });
+      console.log("BOND:test:exit");
+    });
   });
 
   // describe("GIVEN some text is selected in editor", () => {
