@@ -314,6 +314,11 @@ suite("GIVEN SetupWorkspace Command", function () {
             graph: {
               zoomSpeed: 1,
             },
+            views: {
+              treeView: {
+                treeItemLabelType: "title",
+              },
+            },
             enableAutoCreateOnDefinition: false,
             enableXVaultWikiLink: false,
             enableRemoteVaultInit: true,
