@@ -768,41 +768,7 @@ export async function _activate(
 
       const treeView = new NativeTreeView(providerConstructor);
       treeView.show();
-      vscode.commands.registerCommand(
-        DENDRON_COMMANDS.TREEVIEW_LABEL_BY_TITLE.key,
-        sentryReportingCallback(() => {
-          if (treeView.updateLabelTypeHandler) {
-            treeView.updateLabelTypeHandler({
-              labelType: TreeItemLabelTypeEnum.title,
-            });
-          }
-        })
-      );
-
-      vscode.commands.registerCommand(
-        DENDRON_COMMANDS.TREEVIEW_LABEL_BY_FILENAME.key,
-        sentryReportingCallback(() => {
-          if (treeView.updateLabelTypeHandler) {
-            treeView.updateLabelTypeHandler({
-              labelType: TreeItemLabelTypeEnum.filename,
-            });
-          }
-        })
-      );
-
-      /**
-       * This is a little flaky right now, but it works most of the time.
-       * Leaving this for dev / debug purposes.
-       * Enablement is set to be DendronContext.DEV_MODE
-       *
-       * TODO: fix tree item register issue and flip the dev mode flag.
-       */
-      vscode.commands.registerCommand(
-        DENDRON_COMMANDS.TREEVIEW_EXPAND_ALL.key,
-        sentryReportingCallback(() => {
-          treeView.expandAll();
-        })
-      );
+      _setupTreeViewCommands(treeView);
 
       context.subscriptions.push(treeView);
 
@@ -1248,6 +1214,40 @@ function _setupLanguageFeatures(context: vscode.ExtensionContext) {
   );
   completionProvider.activate(context);
   codeActionProvider.activate(context);
+}
+
+function _setupTreeViewCommands(treeView: NativeTreeView) {
+  vscode.commands.registerCommand(
+    DENDRON_COMMANDS.TREEVIEW_LABEL_BY_TITLE.key,
+    sentryReportingCallback(() => {
+      treeView.updateLabelType({
+        labelType: TreeItemLabelTypeEnum.title,
+      });
+    })
+  );
+
+  vscode.commands.registerCommand(
+    DENDRON_COMMANDS.TREEVIEW_LABEL_BY_FILENAME.key,
+    sentryReportingCallback(() => {
+      treeView.updateLabelType({
+        labelType: TreeItemLabelTypeEnum.filename,
+      });
+    })
+  );
+
+  /**
+   * This is a little flaky right now, but it works most of the time.
+   * Leaving this for dev / debug purposes.
+   * Enablement is set to be DendronContext.DEV_MODE
+   *
+   * TODO: fix tree item register issue and flip the dev mode flag.
+   */
+  vscode.commands.registerCommand(
+    DENDRON_COMMANDS.TREEVIEW_EXPAND_ALL.key,
+    sentryReportingCallback(() => {
+      treeView.expandAll();
+    })
+  );
 }
 
 function updateEngineAPI(port: number | string): EngineAPIService {
