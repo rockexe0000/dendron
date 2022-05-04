@@ -1244,8 +1244,8 @@ function _setupTreeViewCommands(treeView: NativeTreeView) {
    */
   vscode.commands.registerCommand(
     DENDRON_COMMANDS.TREEVIEW_EXPAND_ALL.key,
-    sentryReportingCallback(() => {
-      treeView.expandAll();
+    sentryReportingCallback(async () => {
+      await treeView.expandAll();
     })
   );
 }

@@ -82,6 +82,10 @@ type Metadata = Partial<{
    * Theme for Note Graph View
    */
   graphTheme?: GraphThemeEnum;
+  /*
+   * status of info message when toggling tree view update label button.
+   */
+  showTreeViewUpdateLabelMsg: boolean;
 }>;
 
 export enum InactvieUserMsgStatusEnum {
@@ -179,6 +183,10 @@ export class MetadataService {
     return this.getMeta().graphTheme;
   }
 
+  getShowTreeViewUpdateLabelMsg() {
+    return this.getMeta().showTreeViewUpdateLabelMsg ?? true;
+  }
+
   setMeta(key: keyof Metadata, value: any) {
     const stateFromFile = this.getMeta();
     stateFromFile[key] = value;
@@ -260,5 +268,9 @@ export class MetadataService {
     if (meta.graphTheme !== graphTheme) {
       this.setMeta("graphTheme", graphTheme);
     }
+  }
+
+  setShowTreeViewUpdateLabelMsg(value: boolean) {
+    return this.setMeta("showTreeViewUpdateLabelMsg", value);
   }
 }
